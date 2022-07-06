@@ -1,0 +1,13 @@
+.input {
+  @apply py-4;
+  @apply px-4;
+  @apply rounded-2xl;
+  @apply font-light;
+  @apply text-gray-900 text-sm;
+  @apply placeholder-gray-400;
+  @apply outline-none;
+
+  &--gray {
+    @apply bg-gray-100;
+  }
+}

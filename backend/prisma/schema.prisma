@@ -1,0 +1,145 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  // previewFeatures = []
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+model User {
+  id           String         @id @default(cuid())
+  nickname     String
+  email        String         @unique
+  password     String
+  birthdate    String
+  status       Boolean
+  level        Int
+  experience   Int
+  avatar       String
+  points       Int
+  teams        Team[]         @relation(fields: [teamsId], references: [id])
+  teamsId      String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  partyHistory PartyHistory[]
+  role         Role[]
+  party        Party[]
+}
+
+model Team {
+  id         String    @id @default(cuid())
+  name       String
+  biography  String?
+  status     Boolean
+  image      String?
+  uniqueCode String
+  favorite   Boolean    @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  users      User[]    @relation(fields: [userId], references: [id])
+  userId     String?
+  ranking    Ranking[]
+  event      Event[]
+}
+
+model Ranking {
+  id      String @id @default(cuid())
+  team    Team[] @relation(fields: [teamsId], references: [id])
+  teamsId String
+  points  Int
+  victory Int
+  defeat  Int
+}
+
+model Event {
+  id        String   @id @default(cuid())
+  name      String
+  team      Team[]   @relation(fields: [teamsId], references: [id])
+  teamsId   String
+  dateTo    DateTime
+  dateFrom  DateTime
+  status    Boolean
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Actuality {
+  id        String   @id @default(cuid())
+  title     String
+  subtitle  String?
+  content   String?
+  lunchAt   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Party {
+  id           String         @id @default(cuid())
+  startedAt    DateTime       @default(now())
+  endedAt      DateTime
+  name         String
+  points       Int
+  partyHistory PartyHistory[]
+  user         User     @relation(fields: [usersId], references: [id])
+  usersId      String
+}
+
+model PartyHistory {
+  id        String   @id @default(cuid())
+  name      String
+  points    Int
+  party     Party[]  @relation(fields: [partieId], references: [id])
+  partieId  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [usersId], references: [id])
+  usersId   String
+}
+
+model Quizz {
+  id              String          @id @default(cuid())
+  name            String
+  details         String?
+  status          Int
+  quizzCategory   QuizzCategory   @relation(fields: [quizzCategoryId], references: [id])
+  quizzCategoryId String
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  quizzQuestion   QuizzQuestion[]
+}
+
+model QuizzCategory {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  quizz     Quizz[]
+}
+
+model QuizzQuestion {
+  id          String        @id @default(cuid())
+  title       String
+  quizz       Quizz         @relation(fields: [quizzId], references: [id])
+  quizzId     String
+  points      Int
+  level       Int
+  quizzAnswer QuizzAnswer[]
+}
+
+model QuizzAnswer {
+  id              String        @id @default(cuid())
+  name            String
+  isGood          Boolean
+  question        QuizzQuestion @relation(fields: [quizzQuestionId], references: [id])
+  quizzQuestionId String
+}
+
+enum Role {
+  GUILD_ADMIN
+  ADMIN
+  USER
+}

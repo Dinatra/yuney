@@ -1,0 +1,200 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Users {
+  id String [pk]
+  nickname String [not null]
+  email String [unique, not null]
+  password String [not null]
+  birthdate String [not null]
+  status Boolean [not null]
+  level Int [not null]
+  experience Int [not null]
+  avatar String [not null]
+  points Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  Users_team Users_team [not null]
+  Partie_historique Partie_historique [not null]
+  role Role [not null]
+}
+
+Table Users_team {
+  id Int [pk, increment]
+  teams Teams [not null]
+  teamsId Int [not null]
+  user Users [not null]
+  usersId String [not null]
+  enabled Boolean [not null]
+}
+
+Table Teams {
+  id Int [pk, increment]
+  name String [not null]
+  biography String
+  on_stream Boolean [not null]
+  status Int [not null]
+  image String
+  unique_code String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  Users_team Users_team [not null]
+  Global_ranking Global_ranking [not null]
+  Monthly_ranking Monthly_ranking [not null]
+  Weekly_ranking Weekly_ranking [not null]
+  Evenements Evenements [not null]
+}
+
+Table Global_ranking {
+  id Int [pk, increment]
+  team Teams [not null]
+  teamsId Int [not null]
+  points Int [not null]
+  victory Int [not null]
+  defeat Int [not null]
+}
+
+Table Monthly_ranking {
+  id Int [pk, increment]
+  team Teams [not null]
+  teamsId Int [not null]
+  points Int [not null]
+  victory Int [not null]
+  defeat Int [not null]
+  date_to DateTime [not null]
+  date_from DateTime [not null]
+}
+
+Table Weekly_ranking {
+  id Int [pk, increment]
+  team Teams [not null]
+  teamsId Int [not null]
+  points Int [not null]
+  victory Int [not null]
+  defeat Int [not null]
+  date_to DateTime [not null]
+  date_from DateTime [not null]
+}
+
+Table Evenements {
+  id Int [pk, increment]
+  name String [not null]
+  team Teams [not null]
+  teamsId Int [not null]
+  date_to DateTime [not null]
+  date_from DateTime [not null]
+  status Boolean [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Partie_historique {
+  id Int [pk, increment]
+  user Users [not null]
+  usersId String [not null]
+  points Int [not null]
+  partie Partie [not null]
+  partieId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+}
+
+Table Actuality {
+  id Int [pk, increment]
+  title String [not null]
+  subtitle String
+  content String
+  lunch_at DateTime [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Table Partie {
+  id Int [pk, increment]
+  started_at DateTime [not null]
+  ended_at DateTime [not null]
+  game Game [not null]
+  gameId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  Partie_historique Partie_historique [not null]
+}
+
+Table Game {
+  id Int [pk, increment]
+  name String [not null]
+  points Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  Partie Partie [not null]
+}
+
+Table Quizz {
+  id Int [pk, increment]
+  name String [not null]
+  details String
+  Status Int [not null]
+  type Quizz_type [not null]
+  quizz_typeId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  Quizz_question Quizz_question [not null]
+}
+
+Table Quizz_type {
+  id Int [pk, increment]
+  name String [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  Quizz Quizz [not null]
+}
+
+Table Quizz_question {
+  id Int [pk, increment]
+  title String [not null]
+  subtitle String
+  quizz Quizz [not null]
+  quizzId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+  Quizz_response Quizz_response [not null]
+}
+
+Table Quizz_response {
+  id Int [pk, increment]
+  name String [not null]
+  value Boolean [not null]
+  question Quizz_question [not null]
+  quizz_questionId Int [not null]
+  createdAt DateTime [default: `now()`, not null]
+  updatedAt DateTime [not null]
+}
+
+Enum Role {
+  GUILD_ADMIN
+  ADMIN
+  USER
+}
+
+Ref: Users_team.teamsId > Teams.id
+
+Ref: Users_team.usersId > Users.id
+
+Ref: Global_ranking.teamsId > Teams.id
+
+Ref: Monthly_ranking.teamsId > Teams.id
+
+Ref: Weekly_ranking.teamsId > Teams.id
+
+Ref: Evenements.teamsId > Teams.id
+
+Ref: Partie_historique.usersId > Users.id
+
+Ref: Partie_historique.partieId > Partie.id
+
+Ref: Partie.gameId > Game.id
+
+Ref: Quizz.quizz_typeId > Quizz_type.id
+
+Ref: Quizz_question.quizzId > Quizz.id
+
+Ref: Quizz_response.quizz_questionId > Quizz_question.id

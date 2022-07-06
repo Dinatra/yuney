@@ -1,0 +1,28 @@
+.profile-title {
+  @apply text-4xl;
+  @apply text-prussianBlue;
+  @apply font-semibold;
+  @apply relative;
+
+  &::before {
+    @apply rounded-2xl;
+    content: "";
+    position: absolute;
+    right: 100px;
+    top: 50%;
+    background: linear-gradient(to left, #002651, #00265100);
+    width: 70%;
+    height: 10px;
+  }
+
+  &::after {
+    @apply rounded-2xl;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    background: #002651;
+    width: 50px;
+    height: 10px;
+  }
+}

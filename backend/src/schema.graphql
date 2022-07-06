@@ -1,0 +1,169 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Auth {
+  """JWT access token"""
+  accessToken: String!
+
+  """JWT refresh token"""
+  refreshToken: String!
+  user: User!
+}
+
+input ChangePasswordInput {
+  newPassword: String!
+  oldPassword: String!
+}
+
+input CreateQuizzCategoryInput {
+  name: String!
+}
+
+input CreateQuizzInput {
+  details: String
+  name: String!
+  quizzCategory: [QuizzCategoryInput!]!
+  status: Int
+}
+
+input CreateTeamInput {
+  biography: String
+  image: String
+  name: String!
+  status: Boolean!
+  uniqueCode: String!
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  changePassword(data: ChangePasswordInput!): User!
+  createQuizz(data: CreateQuizzInput!): Quizz!
+  createQuizzCategory(data: CreateQuizzCategoryInput!): QuizzCategory!
+  createTeam(data: CreateTeamInput!): Team!
+  login(data: LoginInput!): Auth!
+  refreshToken(token: String!): Token!
+  signup(data: SignupInput!): Auth!
+  updateQuizz(data: UpdateQuizzInput!): Quizz!
+  updateQuizzCategory(data: UpdateQuizzCategoryInput!): QuizzCategory!
+  updateTeam(data: UpdateTeamInput!, teamId: String!): Team!
+  updateUser(data: UpdateUserInput!): User!
+}
+
+type Query {
+  findQuizzQuestion: QuizzQuestion!
+  findTeam(teamId: String!): Team!
+  getQuizz: Quizz!
+  getQuizzCategory: QuizzCategory!
+  hello(name: String!): String!
+  helloWorld: String!
+  me: User!
+}
+
+type Quizz {
+  Status: Int
+  details: String
+  id: String!
+  name: String!
+  quizzCategory: QuizzCategory!
+}
+
+type QuizzCategory {
+  id: String!
+  name: String!
+  quizz: [Quizz!]
+}
+
+input QuizzCategoryInput {
+  id: String!
+  name: String!
+  quizz: [QuizzInput!]
+}
+
+input QuizzInput {
+  Status: Int
+  details: String
+  id: String!
+  name: String!
+  quizzCategory: QuizzCategoryInput!
+}
+
+type QuizzQuestion {
+  id: String!
+  quizz: Quizz
+  quizzId: String!
+  title: String
+}
+
+"""User role"""
+enum Role {
+  ADMIN
+  USER
+}
+
+input SignupInput {
+  birthdate: String!
+  email: String!
+  nickname: String!
+  password: String!
+}
+
+type Team {
+  biography: String
+  id: String!
+  image: String
+  name: String!
+  status: Boolean!
+  uniqueCode: String!
+  user: [User!]
+}
+
+type Token {
+  """JWT access token"""
+  accessToken: String!
+
+  """JWT refresh token"""
+  refreshToken: String!
+}
+
+input UpdateQuizzCategoryInput {
+  name: String
+}
+
+input UpdateQuizzInput {
+  details: String
+  name: String
+}
+
+input UpdateTeamInput {
+  biography: String
+  image: String
+  name: String
+  updatedAt: Date
+}
+
+input UpdateUserInput {
+  firstname: String
+  lastname: String
+}
+
+type User {
+  """Identifies the date and time when the object was created."""
+  createdAt: Date!
+  email: String!
+  firstname: String
+  id: ID!
+  lastname: String
+  role: Role!
+  teams: [Team!]!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: Date!
+}

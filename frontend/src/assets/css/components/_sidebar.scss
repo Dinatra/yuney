@@ -1,0 +1,14 @@
+.nav-item {
+  @apply transform;
+  @apply translate-x-0;
+  @apply hover:translate-x-6;
+  @apply transition;
+  @apply duration-500;
+  @apply ease-in-out;
+  @apply flex;
+  @apply flex-row;
+  @apply items-center;
+  @apply px-8;
+  @apply py-4;
+  @apply cursor-pointer;
+}

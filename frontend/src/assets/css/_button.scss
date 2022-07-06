@@ -1,0 +1,46 @@
+.btn {
+  @apply text-xs;
+  @apply px-4;
+  @apply py-3;
+  @apply rounded-2xl;
+  @apply font-normal;
+  @apply cursor-pointer;
+  @apply shadow-md;
+  @apply transform;
+  @apply translate-y-0;
+  @apply hover:-translate-y-2;
+  @apply transition;
+  @apply duration-500;
+  @apply ease-in-out;
+  @apply flex;
+  @apply flex-row;
+  @apply items-center;
+
+  &--blue {
+    @apply bg-royalBlue;
+    @apply text-white;
+  }
+
+  &--red {
+    @apply bg-radicalRed;
+    @apply text-white;
+  }
+
+  &--purple {
+    @apply bg-mediumPurple;
+    @apply text-white;
+  }
+
+  &--cloudBurst {
+    @apply bg-cloudBurst;
+    @apply text-white;
+  }
+
+  &--gray {
+    @apply shadow-none;
+    @apply bg-white;
+    @apply text-gray-700;
+    @apply border-gray-100;
+    @apply border-2;
+  }
+}

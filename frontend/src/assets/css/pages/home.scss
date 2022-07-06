@@ -1,0 +1,29 @@
+.home-img {
+  position: relative;
+
+  &--heading-img-purple {
+    &::before {
+      position: absolute;
+      content: "";
+      top: 250px;
+      left: 50px;
+      background: #af41e4;
+      width: 130px;
+      height: 150px;
+      border-radius: 15px;
+    }
+  }
+
+  &--heading-img-ice-blue {
+    &::before {
+      position: absolute;
+      content: "";
+      top: 350px;
+      left: 50px;
+      background: #559aab;
+      width: 130px;
+      height: 150px;
+      border-radius: 15px;
+    }
+  }
+}
